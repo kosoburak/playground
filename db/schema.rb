@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20151223203400) do
   add_index "positions", ["user_id"], name: "index_positions_on_user_id"
 
   create_table "projects", force: :cascade do |t|
+    t.string   "name"
     t.text     "description"
     t.integer  "author_id",   null: false
     t.string   "locality"

@@ -15,6 +15,21 @@ h2
     = f.input :current_password, hint: "we need your current password to confirm your changes", required: true
     = f.input :locality
     = f.input :avatar, as: :file
+    = f.hidden_field :skill_list, value: resource.skill_list.join(',')
+    div class="form-group"
+      = label resource_name, :skill_list, "Skills", class: "control-label"
+      div class="add-skill-input"
+        a href="#" id="add-skill-link" class="btn btn-default" aria-hidden="true"
+          span class="glyphicon glyphicon-plus"
+          | Add skill
+        = text_field_tag(:new_skill)
+      div class="skills"
+        - resource.skill_list.each do |skill|
+          div class="skill btn btn-primary btn-sm"
+            span
+              = skill
+            a href='#' class="remove-skill-link" aria-hidden="true"
+              span class="glyphicon glyphicon-remove"
   .form-actions
     = f.button :submit, "Update"
 h3

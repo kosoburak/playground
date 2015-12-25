@@ -16,6 +16,8 @@ html
             ul class="nav navbar-nav"
               li
                 = link_to "Home", :root
+              li
+                = link_to "Users", :users
             ul class="nav navbar-nav navbar-right"
               li
                 = link_to(image_tag(current_user.avatar.url(:tiny)), edit_user_registration_path, class: 'user_avatar')
@@ -26,4 +28,5 @@ html
         = notice
       p class="alert"
         = alert
+    div class="container"
       = yield

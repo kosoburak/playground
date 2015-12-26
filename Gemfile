@@ -38,6 +38,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem "paperclip", "~> 4.3"
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'kaminari'
 
 group :development, :test do
   gem 'sqlite3'

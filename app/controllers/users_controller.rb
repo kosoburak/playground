@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
 
   def index
+    @users = User.includes(:skills)
+    @users = @users.name_like(params[:search_name]) unless params[:search_name].blank?
+    @users = @users.locality_like(params[:search_locality]) unless params[:search_locality].blank?
+    @users = @users.skills_like(params[:search_skills]) unless params[:search_skills].blank?
+    @users = @users.order(:name).page(params[:page])
   end
 
   def show

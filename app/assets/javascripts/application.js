@@ -15,3 +15,9 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+$(document).on('click', '.clickable-row', onRowClick);
+
+function onRowClick(event){
+  window.document.location = $(this).data("href");
+}

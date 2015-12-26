@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :skils
-  has_many :own_projects
-  has_and_belongs_to_many :other_projects
+  has_many :own_projects, class_name: 'Project', foreign_key: 'author_id'
+  has_and_belongs_to_many :other_projects, class_name: 'Project'
   has_many :evaluations
   has_many :messages
 
@@ -16,4 +16,23 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   acts_as_taggable_on :skills
+
+  def project_count
+    User.includes(:own_projects).references(:projects).where('projects.author_id = ?', id).count('projects.id') + User.includes(:other_projects).references(:projects_users).where('projects_users.user_id = ?', id).count('projects_users.project_id')
+  end
+
+  def self.name_like(name)
+    where("name LIKE ?", "%#{name}%")
+  end
+
+  def self.locality_like(locality)
+    where("locality LIKE ?", "%#{locality}%")
+  end
+
+  def self.skills_like(skills)
+    array = []
+    array = skills.split(',') if skills
+    array.map! { |skill| skill.strip }
+    tagged_with(array, :any => true)
+  end
 end

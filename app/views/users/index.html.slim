@@ -1,37 +1,39 @@
 h1 Users
-div class="row search"
-  = form_tag users_path, method: :get do
-    = label :search, :name, "Name"
-    = text_field_tag(:search_name)
-    = label :search, :locality, "Locality"
-    = text_field_tag(:search_locality)
-    = label :search, :skills, "Skills"
-    = text_field_tag(:search_skills)
-    = submit_tag "Search", :name => nil
-div class="row"
-  table class="table table-striped table-hover"
-    thead
-      tr
-        th class="col-md-2" Name
-        th class="col-md-2" Locality
-        th Skills
-        th class="col-md-2" Number of projects
-    tbody
-      - @users.each do |user|
-        tr class="clickable-row" data-href="#{user_path(user)}"
-            td
-              span class="left-icon"
-                = image_tag(user.avatar.url(:tiny))
-              span
-                strong
-                  = user.name
-            td
-              = user.locality
-            td class="skills"
-              - user.skill_list.each do |skill|
-                div class="skill btn btn-primary btn-sm"
-                  = skill
-            td
-              = user.project_count
+div class="container"
+  div class="row search"
+    = form_tag users_path, method: :get do
+      = label :search, :name, "Name"
+      = text_field_tag(:search_name)
+      = label :search, :locality, "Locality"
+      = text_field_tag(:search_locality)
+      = label :search, :skills, "Skills"
+      = text_field_tag(:search_skills)
+      = submit_tag "Search", :name => nil
+div class="container"
+  div class="row"
+    table class="table table-striped table-hover"
+      thead
+        tr
+          th class="col-md-2" Name
+          th class="col-md-2" Locality
+          th Skills
+          th class="col-md-2" Number of projects
+      tbody
+        - @users.each do |user|
+          tr class="clickable-row" data-href="#{user_path(user)}"
+              td
+                span class="left-icon"
+                  = image_tag(user.avatar.url(:tiny))
+                span
+                  strong
+                    = user.name
+              td
+                = user.locality
+              td class="skills"
+                - user.skill_list.each do |skill|
+                  div class="skill btn btn-primary btn-sm"
+                    = skill
+              td
+                = user.project_count
 
 = paginate @users

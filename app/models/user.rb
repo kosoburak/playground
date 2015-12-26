@@ -23,6 +23,18 @@ class User < ActiveRecord::Base
     User.includes(:own_projects).references(:projects).where('projects.author_id = ?', id).count('projects.id') + User.includes(:other_projects).references(:projects_users).where('projects_users.user_id = ?', id).count('projects_users.project_id')
   end
 
+  def sent_messages
+    Message.includes(:user).where('messages.user_id = ? and messages.from_id = ?', id, id)
+  end
+
+  def received_messages
+    Message.includes(:user).where('messages.user_id = ? and messages.to_id = ?', id, id)
+  end
+
+  def unread_messages
+    Message.where('messages.user_id = ? and messages.to_id = ? and messages.read_time is ?', id, id, nil).count('id')
+  end
+
   def self.name_like(name)
     where("name LIKE ?", "%#{name}%")
   end

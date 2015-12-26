@@ -1,0 +1,16 @@
+div class="container"
+  div class="row"
+    h1 New message
+    
+  div class="row"
+    = simple_form_for(@message) do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :to_name, label: "To"
+        = f.input :subject, as: :string
+        = f.input :text
+      .form-actions
+        = f.button :submit, label: "Send message"
+    
+  div class="row"
+    = link_to "Back", url_for(:back)

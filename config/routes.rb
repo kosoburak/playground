@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :index]
   resources :project, only: [:show]
+  resources :messages, except: [:index, :update] do
+    get 'received', on: :collection
+    get 'sent', on: :collection
+  end
 
   # Example resource route with options:
   #   resources :products do

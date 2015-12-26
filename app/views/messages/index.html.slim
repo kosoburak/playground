@@ -1,0 +1,40 @@
+div class="container"
+  = link_to "Received", :received_messages, class: 'sub-menu-link'
+  = link_to "Sent", :sent_messages, class: 'sub-menu-link'
+  = link_to new_message_path, class: 'pull-right btn btn-default' do
+    span class="left-icon glyphicon glyphicon-plus"
+    | New message
+
+div class="container"
+  h1
+    = controller.action_name.capitalize
+
+div class="container"
+  div class="row"
+  table class="table table-striped table-hover"
+    thead
+      tr
+        - if controller.action_name == 'received'
+          th class="col-md-2" From
+        - else
+          th class="col-md-2" To
+        th Subject
+        th class="col-md-2"
+          = controller.action_name.capitalize
+        th class="col-md-1"
+    tbody
+      - @messages.each do |message|
+        tr class=(message.read_time ? "clickable-row": "clickable-row unread") data-href="#{message_path(message)}"
+          - if controller.action_name == 'received'
+            td
+              = message.from.name
+          - else
+            td
+              = message.to.name
+          td
+            = message.subject
+          td
+            = message.send_time
+          td
+            = link_to message, method: :delete, data: { confirm: "Are you sure?" } do
+              span class="glyphicon glyphicon-trash"

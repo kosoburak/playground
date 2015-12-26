@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 20151226125049) do
   create_table "messages", force: :cascade do |t|
     t.integer  "from_id",    null: false
     t.integer  "to_id",      null: false
+    t.integer  "user_id",    null: false
+    t.text     "subject"
     t.text     "text",       null: false
     t.datetime "send_time",  null: false
     t.datetime "read_time"
@@ -60,6 +62,7 @@ ActiveRecord::Schema.define(version: 20151226125049) do
 
   add_index "messages", ["from_id"], name: "index_messages_on_from_id"
   add_index "messages", ["to_id"], name: "index_messages_on_to_id"
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id"
 
   create_table "positions", force: :cascade do |t|
     t.integer  "project_id",  null: false
@@ -149,6 +152,7 @@ ActiveRecord::Schema.define(version: 20151226125049) do
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["name"], name: "index_users_on_name", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
   create_table "users_roles", id: false, force: :cascade do |t|

@@ -5,6 +5,7 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
     user ||= User.new # guest user (not logged in)
+
     if user.has_role? :admin
       can :manage, :all
       return
@@ -13,13 +14,18 @@ class Ability
     can :read, :home
 
     alias_action :create, :read, :update, :destroy, :to => :crud
-    resources = [User, Comment, Evaluation, Karma, Message, Position, Project]
+    resources = [User, Comment, Evaluation, Karma, Position, Project]
+
     resources.each do |resource|
+      can :read, resource
       can :crud, resource do |r|
         user.has_role? :owner, r
       end
+    end
 
-      can :read, resource unless resource == Message
+    can :create, Message
+    can [:received, :sent, :crud], Message do |m|
+      user.has_role? :owner, m
     end
     #
     # The first argument to `can` is the action you are giving the user

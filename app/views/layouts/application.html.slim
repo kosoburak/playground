@@ -18,6 +18,8 @@ html
                 = link_to "Home", :root
               li
                 = link_to "Users", :users
+              li
+                = link_to current_user.unread_messages > 0 ? "(#{current_user.unread_messages}) Messages" : "Messages", :received_messages
             ul class="nav navbar-nav navbar-right"
               li
                 = link_to(image_tag(current_user.avatar.url(:tiny)), edit_user_registration_path, class: 'user_avatar')

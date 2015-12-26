@@ -1,4 +1,6 @@
 class Position < ActiveRecord::Base
+  resourcify
+  
   belongs_to :project
   belongs_to :user
   has_many :skils

@@ -16,6 +16,7 @@ gem 'autoprefixer-rails'
 gem 'slim-rails'
 gem 'slim'
 gem 'simple_form'
+gem 'kaminari'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -38,7 +39,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem "paperclip", "~> 4.3"
 gem 'acts-as-taggable-on', '~> 3.4'
-gem 'kaminari'
+gem 'rolify'
+gem 'cancancan'
 
 group :development, :test do
   gem 'sqlite3'

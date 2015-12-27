@@ -1,0 +1,59 @@
+  div class="row"
+    div class="col-md-4"
+      = image_tag(@user.avatar.url(:medium))
+      h4
+       = @user.name
+      div aria-hidden="true"
+        span class="left-icon glyphicon glyphicon-time"
+        | Joined on #{@user.confirmed_at}
+      - unless @user.locality.blank?
+        div aria-hidden="true"
+        span class="left-icon glyphicon glyphicon-map-marker"
+        | Working from #{@user.locality}
+    
+    div class="col-md-8"
+      h2 Projects
+      - if @projects.empty?
+        p User is not involved in any projects
+      - else
+        ul class="projects"
+          - @projects.each do |project|
+            li class="project"
+              = link_to project_path(project) do
+                span aria-hidden="true"
+                  span class="glyphicon glyphicon-asterisk"
+                  = project.name
+                span
+                  = project.description
+                span aria-hidden="true"
+                  = project.participants.count
+                  span class="glyphicon glyphicon-user"
+                span aria-hidden="true"
+                  = project.karmas.count
+                  span class="glyphicon glyphicon-certificate"
+      
+      h2 Skills
+      - if @user.skill_list.empty?
+        p User doesn't have any skills
+      - else
+        div class="skills"
+          - @user.skill_list.each do |skill|
+            div class="skill btn btn-primary btn-sm"
+              = skill
+      
+      h2 Evaluations
+      - if @user.evaluations.empty?
+        p User have no evaluations
+      - else
+        div class="evaluations"
+          - @user.evaluations.each do |evaluation|
+            div class="evaluation"
+              span
+                = link_to evaluation.author.name, user_path(evaluation.author)
+              span
+                = link_to evaluation.project.name, project_path(evaluation.project)
+              span
+                = evaluation.text
+      = link_to new_user_evaluation_path(@user.id), class: (@projects.empty? ? 'pull-right btn btn-default disabled' : 'pull-right btn btn-default') do
+        span class="left-icon glyphicon glyphicon-plus"
+        | Add evaluation

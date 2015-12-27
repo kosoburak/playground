@@ -1,0 +1,40 @@
+h2
+  | Edit 
+  = resource_name.to_s.humanize
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :email, required: true, autofocus: true
+    = f.input :name, required: true
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      p
+        | Currently waiting confirmation for: 
+        = resource.unconfirmed_email
+    = f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false
+    = f.input :password_confirmation, required: false
+    = f.input :current_password, hint: "we need your current password to confirm your changes", required: true
+    = f.input :locality
+    = f.input :avatar, as: :file
+    = f.hidden_field :skill_list, value: resource.skill_list.join(',')
+    div class="form-group"
+      = label resource_name, :skill_list, "Skills", class: "control-label"
+      div class="add-skill-input"
+        a href="#" id="add-skill-link" class="btn btn-default" aria-hidden="true"
+          span class="glyphicon glyphicon-plus"
+          | Add skill
+        = text_field_tag(:new_skill)
+      div class="skills"
+        - resource.skill_list.each do |skill|
+          div class="skill btn btn-primary btn-sm"
+            span
+              = skill
+            a href='#' class="remove-skill-link" aria-hidden="true"
+              span class="glyphicon glyphicon-remove"
+  .form-actions
+    = f.button :submit, "Update"
+h3
+  | Cancel my account
+p
+  | Unhappy? 
+  = link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete
+= link_to "Back", :back

@@ -15,9 +15,11 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  resources :users, only: [:show, :index]
+  resources :users, only: [:show, :index] do
+    resources :evaluations, except: [:show, :index]
+  end
   resources :project, only: [:show]
-  resources :messages, except: [:index, :update] do
+  resources :messages, except: [:index, :update, :edit] do
     get 'received', on: :collection
     get 'sent', on: :collection
   end

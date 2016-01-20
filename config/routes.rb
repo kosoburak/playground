@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :positions
 #  resources :projects
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
     resources :evaluations, except: [:show, :index]
   end
   resources :projects, except: [:update] do
+    resources :positions, except: :index
     get 'my', on: :collection
     get 'participating', on: :collection
   end

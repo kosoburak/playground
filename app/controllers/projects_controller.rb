@@ -1,20 +1,30 @@
 class ProjectsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
   # GET /projects.json
   def index
     @projects = Project.all
+    @projects = @projects.name_like(params[:filter_name]) unless params[:filter_name].blank?
+    @projects = @projects.author_like(params[:filter_author]) unless params[:filter_author].blank?
+    @projects = @projects.locality_like(params[:filter_locality]) unless params[:filter_locality].blank?
+    @projects = @projects.order(:name).page(params[:page])
   end
 
   def my
     @projects = current_user.own_projects
+    @projects = @projects.order(:name).page(params[:page])
     render :index
   end
 
   def participating
     @projects = current_user.other_projects
+    @projects = @projects.order(:name).page(params[:page])
     render :index
+  end
+
+  def create_position
   end
 
   # GET /projects/1
@@ -37,7 +47,7 @@ class ProjectsController < ApplicationController
     @project = current_user.own_projects.build(project_params)
 
     respond_to do |format|
-      if @project.save
+      if @project.save && @project.author.add_role(:owner, @project)
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
@@ -79,6 +89,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name,:description)
+      params.require(:project).permit(:name,:description,:locality)
     end
 end

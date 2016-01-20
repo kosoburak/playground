@@ -9,4 +9,16 @@ class Project < ActiveRecord::Base
 
   validates :author, presence: true
   validates :name, presence: true
+
+  def self.name_like(name)
+    where("name LIKE ?", "%#{name}%")
+  end
+
+  def self.author_like(author)
+    where("author LIKE ?", "%#{author}%")
+  end
+
+  def self.locality_like(locality)
+    where("locality LIKE ?", "%#{locality}%")
+  end
 end

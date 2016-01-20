@@ -1,6 +1,51 @@
 p#notice = notice
 
+div style="text-align:center;"
+  h1
+    = @project.name
+  h3
+    = @project.description
+  br
+  div class="row"
+    div aria-hidden="true"
+      span class="left-icon glyphicon glyphicon-king"
+      | Author: #{@project.author.name}
+      div aria-hidden="true"
+      span class="left-icon glyphicon glyphicon-map-marker"
+      | Located at #{@project.locality}
+  h2 Positions
+  br
+  = link_to new_project_position_path(@project.id), class: 'btn btn-default btn-lg' do
+    span class="left-icon glyphicon glyphicon-plus"
+    | Create position
+  br
+  h3 List of positions
+  br
+  div class="container"
+    table class="table-striped table-hover"
+      thead
+        tr
+          th class="col-md-2" Description
+          th Skills
+          th class="col-md-2" Assignee
+      tbody
+        - @project.positions.each do |position|
+          tr class="clickable-row" data-href="#{position_path(position)}"
+            td
+              strong
+                = position.description
+            td class="skills"
+              - position.skill_list.each do |skill|
+                div class="skill btn btn-primary btn-sm"
+                  = skill
+            td
+              span class="glyphicon glyphicon-user"
+              span
+              - if !position.user
+                p Not assigned yet
+              - else
+                = position.user.name
 
-= link_to 'Edit', edit_project_path(@project)
-'|
-= link_to 'Back', projects_path
+  = link_to 'Edit', edit_project_path(@project)
+  '|
+  = link_to 'Back', projects_path

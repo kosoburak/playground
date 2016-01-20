@@ -21,13 +21,13 @@ div class="container"
 br
   div class="row search"
     = form_tag projects_path, method: :get do
-    = label :search, :name, "Name"
-    = text_field_tag(:search_name)
-    = label :search, :author, "Author"
-    = text_field_tag(:search_author)
-    = label :search, :locality, "Locality"
-    = text_field_tag(:search_locality)
-    = submit_tag "Filter", :name => nil
+      = label :search, :name, "Name"
+      = text_field_tag(:filter_name)
+      = label :search, :author, "Author"
+      = text_field_tag(:filter_author)
+      = label :search, :locality, "Locality"
+      = text_field_tag(:filter_locality)
+      = submit_tag "Filter", :name => nil
 div class="container"
   div class="row"
   table class="table table-striped table-hover"
@@ -57,12 +57,11 @@ div class="container"
                     td
                       span 
                         strong Locality: 
-                      span Brno
+                      span
+                        = project.locality
                     td
                       span
                         strong Karma: 
                       span 0
 
-
-
-
+=paginate @projects

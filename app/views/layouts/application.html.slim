@@ -19,6 +19,8 @@ html
               li
                 = link_to "Projects", :projects
               li
+                = link_to "Positions", :positions
+              li
                 = link_to "Users", :users
               li
                 = link_to current_user.unread_messages > 0 ? "(#{current_user.unread_messages}) Messages" : "Messages", :received_messages

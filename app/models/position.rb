@@ -3,6 +3,7 @@ class Position < ActiveRecord::Base
   
   belongs_to :project
   belongs_to :user
+  belongs_to :contract
   has_many :skils
 
   validates :project, presence: true

@@ -1,6 +1,7 @@
 class PositionsController < ApplicationController
-  load_and_authorize_resource :project
-  load_and_authorize_resource :position, :through => :project
+  load_and_authorize_resource :project, except: [:index, :show]
+  load_and_authorize_resource :position, :through => :project, except: [:index, :show]
+  load_and_authorize_resource :position, only: [:index, :show]
   before_action :set_position, only: [:show, :edit, :update, :destroy]
 
   # GET /positions

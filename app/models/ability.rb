@@ -23,7 +23,7 @@ class Ability
       end
     end
 
-    can :create, Project
+    can [:create, :show], Project
     can [:crud, :my, :participating], Project do |pr|
       user.has_role? :owner, pr
     end
@@ -33,7 +33,7 @@ class Ability
       user.has_role? :owner, e
     end
 
-    can [:show, :read], Position
+    can [:index, :show, :read], Position
     can :crud, Position do |p| 
       user.has_role?(:owner, p.project)
     end

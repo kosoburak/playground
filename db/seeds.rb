@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+#
+contract_list = ["full-time", "part-time", "other"]
+
+contract_list.each do |contract_name|
+  Contract.create( contract_name: contract_name )
+end

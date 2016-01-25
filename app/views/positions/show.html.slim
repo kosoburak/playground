@@ -1,6 +1,35 @@
 p#notice = notice
 
+div class="container"
+  h2
+    | Position name: 
+    = @position.name
+  h3 Description:
+  p
+    = @position.description
+  h2 Required skills
+  - if @position.skill_list.empty?
+    p Position does not have required skills.
+  - else
+    div class="skills"
+      - @position.skill_list.each do |skill|
+        div class="skill btn btn-primary btn-sm"
+          = skill
+  h2 Contract type:
+  p
+    = @position.contract
+  h2 Position assignee:
+  - if !@position.user
+    = link_to 'Not assigned yet. Apply?', position_add_user_path(@position.id)
+  - else
+    = link_to user_path(@user) do
+      span aria-hidden="true"
+        span
+          = image_tag(@user.avatar.url(:small))
+        span
+          = user.name
+
 
 = link_to 'Edit', edit_position_path(@position)
 '|
-= link_to 'Back', positions_path
+= link_to 'Back', url_for(:back)

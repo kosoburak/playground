@@ -25,6 +25,7 @@ function addSkill(){
   }
 }
 
+
 function removeSkill(skill){
   var skill_list = $("#user_skill_list").val();
   $("#user_skill_list").val(skill_list.replace(skill,""));

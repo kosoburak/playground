@@ -21,31 +21,78 @@ div style="text-align:center;"
   br
   h3 List of positions
   br
+  - if @project.positions.empty?
+    p
+      | This project has no positions.
+  - else
+    div class="container"
+      table class="table-striped table-hover"
+        thead
+          tr
+            th class="col-md-2" Name
+            th class="col-md-2" Description
+            th Skills
+            th class="col-md-2" Assignee
+        tbody
+          - @project.positions.each do |position|
+            tr class="clickable-row" data-href="#{position_path(position)}"
+              td
+                strong
+                  = position.name
+              td
+                strong
+                  = position.description
+              td class="skills"
+                - position.skill_list.each do |skill|
+                  div class="skill btn btn-primary btn-sm"
+                    = skill
+              td
+                span class="glyphicon glyphicon-user"
+                span
+                - if !position.user
+                  p Not assigned yet
+                - else
+                  = position.user.name
+  br
+  h3 Project karma
+  br
+  p Tu treba tlacitko - (glyphicon minus-sign), karma cislo, tlacitko + (glyphicon plus-sign)
+  br
   div class="container"
-    table class="table-striped table-hover"
-      thead
-        tr
-          th class="col-md-2" Description
-          th Skills
-          th class="col-md-2" Assignee
-      tbody
-        - @project.positions.each do |position|
-          tr class="clickable-row" data-href="#{position_path(position)}"
-            td
-              strong
-                = position.description
-            td class="skills"
-              - position.skill_list.each do |skill|
-                div class="skill btn btn-primary btn-sm"
-                  = skill
-            td
-              span class="glyphicon glyphicon-user"
-              span
-              - if !position.user
-                p Not assigned yet
-              - else
-                = position.user.name
+    div class="row"
+      h3 Comments
+      table class="table table-striped table-hover"
+        tbody
+          - @project.comments.each do |comment|
+            tr
+              td
+                div class="container"
+                  table width="100%"
+                    tbody
+                      tr
+                        th class="col-md-1"
+                          = comment.author.name
+                        th rowspan="3"
+                          = comment.text
+                      tr
+                        td
+                          = comment.created_at
+                      tr
+                        td
+                          = link_to 'Delete', [ comment.project, comment ], method: :delete, data: { confirm: 'Are you sure?' }
+
+    div class="row"
+      h4 Add a comment:
+
+    div class="row"
+      = simple_form_for( [@project, @project.comments.build] ) do |f|
+        .form-inputs
+          = f.input :text
+        .form-actions
+          = f.button :submit, label: "Comment"
 
   = link_to 'Edit', edit_project_path(@project)
+  '|
+  = link_to "Delete", @project, method: :delete, data: { confirm: "Are you sure?" }
   '|
   = link_to 'Back', projects_path

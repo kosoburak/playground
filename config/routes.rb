@@ -21,10 +21,16 @@ Rails.application.routes.draw do
     resources :evaluations, except: [:show, :index]
   end
   resources :projects, except: [:update] do
-    resources :positions, except: :index
+    resources :positions, except: [:index]
+    resources :comments
     get 'my', on: :collection
     get 'participating', on: :collection
   end
+
+  resources :positions, only: :index do
+    get 'add_user'
+  end
+
   resources :messages, except: [:index, :update, :edit] do
     get 'received', on: :collection
     get 'sent', on: :collection

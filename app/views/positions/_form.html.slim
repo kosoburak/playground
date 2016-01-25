@@ -2,10 +2,12 @@
   = f.error_notification
 
   .form-inputs
+    = f.input :name
     = f.input :description
+    = f.input :contract_id, collection: @contracts
     = f.hidden_field :skill_list, value: @position.skill_list.join(',')
     div class="form-group"
-      = label @position.description, :skill_list, "Skills", class: "control-label"
+      = label @position.name, :skill_list, "Skills", class: "control-label"
       div class="add-skill-input"
         a href='#' id="add-skill-link" class="btn btn-default" aria-hidden="true"
           span class="glyphicon glyphicon-plus"

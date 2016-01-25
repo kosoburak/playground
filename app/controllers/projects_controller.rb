@@ -30,6 +30,10 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    project_id = params[:id]
+    @project = Project.find(project_id)
+    @positions = Position.includes(:skills)
+    .where('positions_id = ?', project_id)
   end
 
   # GET /projects/new

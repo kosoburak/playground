@@ -15,7 +15,7 @@ h2
     = f.input :current_password, hint: "we need your current password to confirm your changes", required: true
     = f.input :locality
     = f.input :avatar, as: :file
-    = f.hidden_field :skill_list, value: resource.skill_list.join(',')
+    = f.hidden_field :skill_list, value: resource.skill_list.join(','), id: 'skill_list'
     div class="form-group"
       = label resource_name, :skill_list, "Skills", class: "control-label"
       div class="add-skill-input"

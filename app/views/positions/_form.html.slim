@@ -5,7 +5,7 @@
     = f.input :name
     = f.input :description
     = f.input :contract_id, collection: @contracts
-    = f.hidden_field :skill_list, value: @position.skill_list.join(',')
+    = f.hidden_field :skill_list, value: @position.skill_list.join(','), id: 'skill_list'
     div class="form-group"
       = label @position.name, :skill_list, "Skills", class: "control-label"
       div class="add-skill-input"

@@ -19,16 +19,15 @@ function onRemoveSkillLinkClick(event){
 function addSkill(){
   var skill = $("#new_skill").val();
   if(skill){
-    var skill_list = $("#user_skill_list").val();
-    $("#user_skill_list").val(skill_list + ", " + skill);
+    var skill_list = $("#skill_list").val();
+    $("#skill_list").val(skill_list + ", " + skill);
     createSkillTag(skill);
   }
 }
 
-
 function removeSkill(skill){
-  var skill_list = $("#user_skill_list").val();
-  $("#user_skill_list").val(skill_list.replace(skill,""));
+  var skill_list = $("#skill_list").val();
+  $("#skill_list").val(skill_list.replace(skill,""));
 }
 
 function createSkillTag(skill){

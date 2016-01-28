@@ -26,7 +26,7 @@ div class="container"
           th class="col-md-2" Assigned to
       tbody
         - @positions.each do |position|
-          tr class="clickable-row" data-href="#{position_path(position)}"
+          tr class="clickable-row" data-href="#{project_position_path(position.project, position)}"
             td
               strong
                 = position.name
@@ -48,4 +48,3 @@ div class="container"
 
 br
 
-= link_to 'New Position', new_position_path

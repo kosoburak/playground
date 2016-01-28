@@ -3,7 +3,7 @@ class PositionsController < ApplicationController
   load_and_authorize_resource :position, :through => :project, except: [:index, :show]
   load_and_authorize_resource :position, only: [:index, :show]
   before_action :set_position, only: [:add_user, :show, :edit, :update, :destroy]
-  before_action :set_contracts, only: [:edit, :new, :show]
+  before_action :set_contracts, only: [:index, :edit, :new, :show]
 
   # GET /positions
   # GET /positions.json
@@ -15,6 +15,7 @@ class PositionsController < ApplicationController
   # GET /positions/1.json
   def show
     position_id = params[:id]
+    @project = Project.find(params[:project_id])
     @position = Position.includes(:skills).find(position_id)
     @user = User.where('user.id = ?', @position.user_id)
   end
@@ -30,6 +31,7 @@ class PositionsController < ApplicationController
 
   def add_user
     @position.user = current_user
+    @position.save
     render :show
   end
 
@@ -86,11 +88,11 @@ class PositionsController < ApplicationController
     end
 
     def set_contracts
-      @contracts = Contract.all.order('contracts.contract_name')
+      @contracts = Contract.all.order('contracts.name')
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def position_params
-      params[:position].permit(:name,:contract,:description,:skill_list)
+      params[:position].permit(:name, :contract_id, :description, :skill_list)
     end
 end

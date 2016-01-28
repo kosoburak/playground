@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :positions
-#  resources :projects
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -21,15 +19,15 @@ Rails.application.routes.draw do
     resources :evaluations, except: [:show, :index]
   end
   resources :projects, except: [:update] do
-    resources :positions, except: [:index]
+    resources :positions, except: [:index] do
+      post 'add_user'
+    end
     resources :comments
     get 'my', on: :collection
     get 'participating', on: :collection
   end
 
-  resources :positions, only: :index do
-    get 'add_user'
-  end
+  resources :positions, only: [:index]
 
   resources :messages, except: [:index, :update, :edit] do
     get 'received', on: :collection

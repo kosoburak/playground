@@ -1,18 +1,50 @@
-h1 Listing positions
+h1 Positions
 
-table
-  thead
-    tr
-      th
-      th
-      th
-
-  tbody
-    - @positions.each do |position|
-      tr
-        td = link_to 'Show', position
-        td = link_to 'Edit', edit_position_path(position)
-        td = link_to 'Destroy', position, data: {:confirm => 'Are you sure?'}, :method => :delete
+h3 Filter positions
+div class="btn-group"
+  = link_to :positions, class: 'btn btn-default btn-lg' do
+    span class="left-icon glyphicon glyphicon-th-list"
+    | All positions
+  = link_to :positions, class: 'btn btn-default btn-lg' do
+    span class="left-icon glyphicon glyphicon-screenshot"
+    | Empty positions
+  = link_to :positions, class: 'btn btn-default btn-lg' do
+    span class="left-icon glyphicon glyphicon-user"
+    | My positions
+br
+div class="container"
+  br
+  div class="row"
+    table class="table table-striped table-hover"
+      thead
+        tr
+          th class="col-md-2" Position
+          th class="col-md-2" Locality
+          th class="col-md-2" Project
+          th class="col-md-2" Contract
+          th Skills
+          th class="col-md-2" Assigned to
+      tbody
+        - @positions.each do |position|
+          tr class="clickable-row" data-href="#{position_path(position)}"
+            td
+              strong
+                = position.name
+            td
+              = position.project.locality
+            td
+              = position.project.name
+            td
+              = position.contract.name
+            td class="skills"
+              - position.skill_list.each do |skill|
+                div class="skill btn btn-primary btn-sm"
+                  = skill
+            td
+              - if position.user
+                = position.user
+              - else
+               e free
 
 br
 

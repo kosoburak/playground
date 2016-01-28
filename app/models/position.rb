@@ -7,6 +7,7 @@ class Position < ActiveRecord::Base
   has_many :skils
 
   validates :project, presence: true
+  validates :contract_id, presence: true
 
   acts_as_taggable_on :skills
 end

@@ -8,6 +8,6 @@
 #
 contract_list = ["full-time", "part-time", "other"]
 
-contract_list.each do |contract_name|
-  Contract.create( contract_name: contract_name )
+contract_list.each do |name|
+  Contract.create( name: name )
 end

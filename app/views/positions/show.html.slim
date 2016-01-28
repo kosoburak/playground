@@ -17,10 +17,10 @@ div class="container"
           = skill
   h2 Contract type:
   p
-    = @position.contract
+    = @position.contract.name
   h2 Position assignee:
   - if !@position.user
-    = link_to 'Not assigned yet. Apply?', position_add_user_path(@position.id)
+    = link_to 'Not assigned yet. Apply?', project_position_add_user_path(@project, @position.id)
   - else
     = link_to user_path(@user) do
       span aria-hidden="true"
@@ -28,8 +28,11 @@ div class="container"
           = image_tag(@user.avatar.url(:small))
         span
           = user.name
+p
+  = current_user.has_role?(:owner, @project)
 
-
-= link_to 'Edit', edit_position_path(@position)
+= link_to 'Edit', edit_project_position_path(@project, @position)
+'|
+= link_to 'Delete', @position, method: :delete, data: { confirm: "Are you sure?" }
 '|
 = link_to 'Back', url_for(:back)

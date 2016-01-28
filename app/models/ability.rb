@@ -23,10 +23,12 @@ class Ability
       end
     end
 
-    can [:create, :show], Project
-    can [:crud, :my, :participating], Project do |pr|
+    can [:create, :show, :my, :participating], Project
+    can [:crud], Project do |pr|
       user.has_role? :owner, pr
     end
+
+    can [:delete, :update], Comment, user_id: user.id
 
     can [:create, :read], Evaluation
     can :crud, Evaluation do |e|
@@ -34,7 +36,7 @@ class Ability
     end
 
     can [:index, :show, :read], Position
-    can :crud, Position do |p| 
+    can [:crud], Position do |p| 
       user.has_role?(:owner, p.project)
     end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160120212946) do
+ActiveRecord::Schema.define(version: 20160127195803) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "project_id", null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160120212946) do
   add_index "comments", ["project_id"], name: "index_comments_on_project_id"
 
   create_table "contracts", force: :cascade do |t|
-    t.text "contract_name"
+    t.text "name"
   end
 
   create_table "evaluations", force: :cascade do |t|

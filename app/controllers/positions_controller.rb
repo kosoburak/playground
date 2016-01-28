@@ -1,9 +1,10 @@
 class PositionsController < ApplicationController
   load_and_authorize_resource :project, except: [:index, :show]
-  load_and_authorize_resource :position, :through => :project, except: [:index, :show]
-  load_and_authorize_resource :position, only: [:index, :show]
-  before_action :set_position, only: [:add_user, :show, :edit, :update, :destroy]
+  load_and_authorize_resource :position, :through => :project, except: [:index, :show, :add_user]
+  load_and_authorize_resource :position, only: [:index, :show, :ass_user]
+  before_action :set_position, only: [:show, :edit, :update, :destroy]
   before_action :set_contracts, only: [:index, :edit, :new, :show]
+  before_action :set_add_user_position, only: [:add_user]
 
   # GET /positions
   # GET /positions.json
@@ -81,6 +82,10 @@ class PositionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_position
       @position = Position.find(params[:id])
+    end
+
+    def set_add_user_position
+      @position = Position.find(params[:position_id])
     end
 
     def set_previous_url

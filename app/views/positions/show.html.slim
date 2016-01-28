@@ -20,14 +20,14 @@ div class="container"
     = @position.contract.name
   h2 Position assignee:
   - if !@position.user
-    = link_to 'Not assigned yet. Apply?', project_position_add_user_path(@project, @position.id)
+    = link_to 'Not assigned yet. Apply?', project_position_add_user_path(@project, @position.id), method: :post
   - else
-    = link_to user_path(@user) do
+    = link_to user_path(@position.user) do
       span aria-hidden="true"
         span
-          = image_tag(@user.avatar.url(:small))
+          = image_tag(@position.user.avatar.url(:small))
         span
-          = user.name
+          = @position.user.name
 p
   = current_user.has_role?(:owner, @project)
 

@@ -33,6 +33,6 @@ p
 
 = link_to 'Edit', edit_project_position_path(@project, @position)
 '|
-= link_to 'Delete', @position, method: :delete, data: { confirm: "Are you sure?" }
+= link_to 'Delete', [@project, @position], method: :delete, data: { confirm: "Are you sure?" }
 '|
 = link_to 'Back', url_for(:back)

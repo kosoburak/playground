@@ -19,10 +19,13 @@ Rails.application.routes.draw do
     resources :evaluations, except: [:show, :index]
   end
   resources :projects, except: [:update] do
+    post 'karma'
     resources :positions, except: [:index] do
       post 'add_user'
     end
-    resources :comments
+    resources :comments do
+      post 'karma'
+    end
     get 'my', on: :collection
     get 'participating', on: :collection
   end

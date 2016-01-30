@@ -62,6 +62,7 @@ div class="container"
                     td
                       span
                         strong Karma: 
-                      span 0
+                      span
+                        = project.karmas.count
 
 =paginate @projects

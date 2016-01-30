@@ -20,17 +20,17 @@
           - @projects.each do |project|
             li class="project"
               = link_to project_path(project) do
-                span aria-hidden="true"
-                  span class="glyphicon glyphicon-asterisk"
+                span class="name"
                   = project.name
-                span
+                span class="description"
                   = project.description
-                span aria-hidden="true"
-                  = project.participants.count
-                  span class="glyphicon glyphicon-user"
-                span aria-hidden="true"
-                  = project.karmas.count
-                  span class="glyphicon glyphicon-certificate"
+                span class="pull-right"
+                  span aria-hidden="true" class="participants"
+                    = project.participants.count
+                    span class="glyphicon glyphicon-user right-icon"
+                  span aria-hidden="true" class="karma"
+                    = project.karmas.count
+                    span class="glyphicon glyphicon-certificate right-icon"
       
       h2 Skills
       - if @user.skill_list.empty?
@@ -47,13 +47,23 @@
       - else
         div class="evaluations"
           - @user.evaluations.each do |evaluation|
-            div class="evaluation"
-              span
-                = link_to evaluation.author.name, user_path(evaluation.author)
-              span
-                = link_to evaluation.project.name, project_path(evaluation.project)
-              span
+            div class="evaluation row"
+              span class="col-md-3"
+                div
+                  span class= "author" Author:
+                  = link_to evaluation.author.name, user_path(evaluation.author)
+                div
+                  span class="project" Project:
+                  = link_to evaluation.project.name, project_path(evaluation.project)
+              span class="col-md-8"
                 = evaluation.text
+              span class="col-md-1"
+              - if can? :update, evaluation
+                = link_to edit_user_evaluation_path(@user.id, evaluation.id) do
+                  span class="glyphicon glyphicon-edit"
+              - if can? :destroy, evaluation
+                = link_to user_evaluation_path(@user.id, evaluation.id), method: :delete, data: { confirm: "Are you sure?" } do
+                  span class="glyphicon glyphicon-trash"
       = link_to new_user_evaluation_path(@user.id), class: (@projects.empty? ? 'pull-right btn btn-default disabled' : 'pull-right btn btn-default') do
         span class="left-icon glyphicon glyphicon-plus"
         | Add evaluation

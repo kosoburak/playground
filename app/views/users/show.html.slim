@@ -20,17 +20,17 @@
           - @projects.each do |project|
             li class="project"
               = link_to project_path(project) do
-                span aria-hidden="true"
-                  span class="glyphicon glyphicon-asterisk"
+                span class="name"
                   = project.name
-                span
+                span class="description"
                   = project.description
-                span aria-hidden="true"
-                  = project.participants.count
-                  span class="glyphicon glyphicon-user"
-                span aria-hidden="true"
-                  = project.karmas.count
-                  span class="glyphicon glyphicon-certificate"
+                span class="pull-right"
+                  span aria-hidden="true" class="participants"
+                    = project.participants.count
+                    span class="glyphicon glyphicon-user right-icon"
+                  span aria-hidden="true" class="karma"
+                    = project.karmas.count
+                    span class="glyphicon glyphicon-certificate right-icon"
       
       h2 Skills
       - if @user.skill_list.empty?

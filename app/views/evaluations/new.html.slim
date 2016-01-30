@@ -2,7 +2,14 @@
   .row
     h1 New evaluation
     
-  = render 'form'
+  .row
+    = simple_form_for(@evaluation, url: user_evaluations_path(@evaluation.user.id)) do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :project_id, collection: @projects, label_method: :name, vlaue_method: :id, include_blank: false
+        = f.input :text
+      .form-actions
+        = f.button :submit, label: "Create Evaluation"
     
   .row
     = link_to "Back", url_for(:back)

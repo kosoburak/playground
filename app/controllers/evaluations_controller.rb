@@ -18,14 +18,14 @@ class EvaluationsController < ApplicationController
   end
 
   def new
-    @evaluation = Evaluation.new
-    render :new
+    user = User.find(params[:user_id])
+    @evaluation = user.evaluations.build
   end
 
   def create
-    @evaluation = Evaluation.new(evaluation_params)
+    user = User.find(params[:user_id])
+    @evaluation = user.evaluations.create(evaluation_params)
     @evaluation.author = current_user
-    @evaluation.user = User.find(params[:user_id])
 
     respond_to do |format|
       if @evaluation.save && current_user.add_role(:owner, @evaluation)
@@ -62,12 +62,12 @@ class EvaluationsController < ApplicationController
     end
   end
 
-  def set_message
+  def set_evaluation
     @evaluation = Evaluation.find(params[:id])
   end
 
   def evaluation_params
-    params.require(:evaluation).permit(:text, :project)
+    params.require(:evaluation).permit(:text, :project_id)
   end
 
 end

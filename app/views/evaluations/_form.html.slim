@@ -1,8 +1,0 @@
-.row
-  = simple_form_for(@evaluation, url: user_evaluations_path(:user_id)) do |f|
-    = f.error_notification
-    .form-inputs
-      = f.input :project_id, collection: @projects
-      = f.input :text
-    .form-actions
-      = f.button :submit, label: "Create Evaluation"

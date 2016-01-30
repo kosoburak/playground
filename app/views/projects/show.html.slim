@@ -55,8 +55,13 @@ div style="text-align:center;"
                   = position.user.name
   br
   h3 Project karma
-  br
-  p Tu treba tlacitko - (glyphicon minus-sign), karma cislo, tlacitko + (glyphicon plus-sign)
+  = button_to project_karma_path(@project.id), method: :post do
+    span aria-hidden="true"
+      - if @karma
+        span class="glyphicon glyphicon-minus left-icon"
+      - else
+        span class="glyphicon glyphicon-plus left-icon"
+      = @project.karmas.count
   br
   div class="container"
     div class="row"
@@ -80,6 +85,15 @@ div style="text-align:center;"
                       tr
                         td
                           = link_to 'Delete', [ comment.project, comment ], method: :delete, data: { confirm: 'Are you sure?' }
+                      tr
+                        td
+                          = button_to project_comment_karma_path(@project.id, comment.id), method: :post do
+                            span aria-hidden="true"
+                              - if comment.has_karma?(current_user)
+                                span class="glyphicon glyphicon-minus left-icon"
+                              - else
+                                span class="glyphicon glyphicon-plus left-icon"
+                              = comment.karmas.count 
 
     div class="row"
       h4 Add a comment:

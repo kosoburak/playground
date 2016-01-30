@@ -23,7 +23,7 @@ class Ability
       end
     end
 
-    can [:create, :show, :my, :participating], Project
+    can [:create, :show, :my, :participating, :karma], Project
     can [:crud], Project do |pr|
       user.has_role? :owner, pr
     end

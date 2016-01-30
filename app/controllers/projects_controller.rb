@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :karma]
 
   # GET /projects
   # GET /projects.json
@@ -34,6 +34,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(project_id)
     @positions = Position.includes(:skills)
     .where('positions_id = ?', project_id)
+    @karma = Karma.find_by(author: current_user, karmable: @project)
   end
 
   # GET /projects/new
@@ -85,9 +86,25 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def karma
+    @karma = Karma.find_by(author: current_user, karmable: @project)
+    if @karma
+      @karma.destroy
+    else
+      @karma = Karma.new
+      @karma.author = current_user
+      @karma.karmable = @project
+
+      @karma.save && @karma.author.add_role(:owner, @karma)
+    end
+
+    redirect_to @project
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
+      params[:id] ||= params[:project_id]
       @project = Project.find(params[:id])
     end
 

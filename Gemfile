@@ -17,6 +17,7 @@ gem 'slim-rails'
 gem 'slim'
 gem 'simple_form'
 gem 'kaminari'
+gem 'bootswatch-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

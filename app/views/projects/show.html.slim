@@ -1,109 +1,93 @@
 p#notice = notice
 
-div style="text-align:center;"
-  h1
-    = @project.name
-  h3
-    = @project.description
-  br
-  div class="row"
+.row
+  div class="col-md-4"
+    h1
+      = @project.name
     div aria-hidden="true"
       span class="left-icon glyphicon glyphicon-king"
       | Author: #{@project.author.name}
+    - unless @project.locality.blank?
       div aria-hidden="true"
-      span class="left-icon glyphicon glyphicon-map-marker"
-      | Located at #{@project.locality}
-  h2 Positions
-  br
-  = link_to new_project_position_path(@project.id), class: 'btn btn-default btn-lg' do
-    span class="left-icon glyphicon glyphicon-plus"
-    | Create position
-  br
-  h3 List of positions
-  br
-  - if @project.positions.empty?
-    p
-      | This project has no positions.
-  - else
-    div class="container"
-      table class="table-striped table-hover"
-        thead
-          tr
-            th class="col-md-2" Name
-            th class="col-md-2" Description
-            th Skills
-            th class="col-md-2" Assignee
-        tbody
-          - @project.positions.each do |position|
-            tr class="clickable-row" data-href="#{project_position_path(@project, position)}"
-              td
-                strong
-                  = position.name
-              td
-                strong
-                  = position.description
-              td class="skills"
-                - position.skill_list.each do |skill|
-                  div class="skill btn btn-primary btn-sm"
-                    = skill
-              td
-                span class="glyphicon glyphicon-user"
-                span
-                - if !position.user
-                  p Not assigned yet
-                - else
-                  = position.user.name
-  br
-  h3 Project karma
-  = button_to project_karma_path(@project.id), method: :post do
-    span aria-hidden="true"
-      - if @karma
-        span class="glyphicon glyphicon-minus left-icon"
-      - else
-        span class="glyphicon glyphicon-plus left-icon"
-      = @project.karmas.count
-  br
-  div class="container"
-    div class="row"
-      h3 Comments
-      table class="table table-striped table-hover"
-        tbody
-          - @project.comments.each do |comment|
-            tr
-              td
-                div class="container"
-                  table width="100%"
-                    tbody
-                      tr
-                        th class="col-md-1"
-                          = comment.author.name
-                        th rowspan="3"
-                          = comment.text
-                      tr
-                        td
-                          = comment.created_at
-                      tr
-                        td
-                          = link_to 'Delete', [ comment.project, comment ], method: :delete, data: { confirm: 'Are you sure?' }
-                      tr
-                        td
-                          = button_to project_comment_karma_path(@project.id, comment.id), method: :post do
-                            span aria-hidden="true"
-                              - if comment.has_karma?(current_user)
-                                span class="glyphicon glyphicon-minus left-icon"
-                              - else
-                                span class="glyphicon glyphicon-plus left-icon"
-                              = comment.karmas.count 
+        span class="left-icon glyphicon glyphicon-map-marker"
+        | Located at #{@project.locality}
+      = button_to project_karma_path(@project.id), method: :post, class: "btn btn-default btn-xs pull-left" do
+        span aria-hidden="true"
+          - if @karma
+            span class="glyphicon glyphicon-minus left-icon"
+            | Karma
+          - else
+            span class="glyphicon glyphicon-plus left-icon"
+            | Karma
+      span class="pull-left right-icon"
+        = @project.karmas.count
 
-    div class="row"
-      h4 Add a comment:
+  div class="col-md-8"
+    h3
+      = @project.description
+    
+    h3 Positions
+    table class="table table-striped table-hover positions"
+      thead
+        tr
+          th class="col-md-2" Name
+          th class="col-md-2" Description
+          th Skills
+          th class="col-md-2" Assignee
+      tbody
+        - @project.positions.each do |position|
+          tr class="clickable-row" data-href="#{project_position_path(@project, position)}"
+            td
+              strong
+                = position.name
+            td
+              strong
+                = position.description
+            td class="skills"
+              - position.skill_list.each do |skill|
+                div class="skill btn btn-primary btn-sm"
+                  = skill
+            td
+              span class="glyphicon glyphicon-user"
+              span
+              - if !position.user
+                p Not assigned yet
+              - else
+                = position.user.name
+    = link_to new_project_position_path(@project.id), class: 'btn btn-default pull-right' do
+      span class="left-icon glyphicon glyphicon-plus"
+      | Create position
 
-    div class="row"
-      = simple_form_for( [@project, @project.comments.build] ) do |f|
-        .form-inputs
-          = f.input :text
-        .form-actions
-          = f.button :submit, label: "Comment"
+div class="row comments"
+  h3 Comments
+  - @project.comments.each do |comment|
+    div class="col-md-2"
+      div
+        = comment.author.name
+      div
+        = comment.created_at
+      = link_to [ comment.project, comment ], method: :delete, data: { confirm: 'Are you sure?' }, class: "block-icon" do
+        span class="glyphicon glyphicon-trash"
+    div class="col-md-8"
+      = comment.text
+    div class="col-md-2"
+      = button_to project_comment_karma_path(@project.id, comment.id), method: :post, class: "btn btn-default btn-xs pull-left" do
+        div aria-hidden="true"
+          - if comment.has_karma?(current_user)
+            span class="glyphicon glyphicon-minus left-icon"
+            | Karma
+          - else
+            span class="glyphicon glyphicon-plus left-icon"
+            | Karma
+      span class="pull-left right-icon"
+        = comment.karmas.count 
+        
+div class="row new-comment"
+  = simple_form_for( [@project, @project.comments.build] ) do |f|
+    .form-inputs
+      = f.input :text
+    .form-actions
+      = f.button :submit, "Add comment"
 
   = link_to 'Edit', edit_project_path(@project)
   '|

@@ -46,20 +46,12 @@ class PositionsController < ApplicationController
   def add_user
     @position.user = current_user
     @position.save
-    current_user.other_projects << @position.project
-    current_user.save
     render :show
   end
 
   def remove_user
     @position.user = nil
     @position.save
- #   p = current_user.other_projects
- #   @positions = @positions.where('project_id = ?', @position.project)
- #   if @positions.count < 2
- #     p.delete(@position.project)
- #     current_user.save
- #   end
     render :show
   end
 

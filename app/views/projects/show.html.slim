@@ -33,7 +33,7 @@ p#notice = notice
       thead
         tr
           th class="col-md-2" Name
-          th class="col-md-2" Description
+          th class="col-md-3" Description
           th Skills
           th class="col-md-2" Assignee
       tbody
@@ -50,8 +50,6 @@ p#notice = notice
                 div class="skill btn btn-primary btn-sm"
                   = skill
             td
-              span class="glyphicon glyphicon-user"
-              span
               - if !position.user
                 p Not assigned yet
               - else

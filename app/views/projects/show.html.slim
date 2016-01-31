@@ -56,9 +56,10 @@ p#notice = notice
                 p Not assigned yet
               - else
                 = position.user.name
-    = link_to new_project_position_path(@project.id), class: 'btn btn-default pull-right' do
-      span class="left-icon glyphicon glyphicon-plus"
-      | Create position
+    - if current_user.has_role? :owner, @project
+      = link_to new_project_position_path(@project.id), class: 'btn btn-default pull-right' do
+        span class="left-icon glyphicon glyphicon-plus"
+        | Create position
 
 div class="row comments"
   h3 Comments

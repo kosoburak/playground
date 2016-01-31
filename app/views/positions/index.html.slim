@@ -5,10 +5,10 @@ div class="btn-group"
   = link_to :positions, class: 'btn btn-default btn-lg' do
     span class="left-icon glyphicon glyphicon-th-list"
     | All positions
-  = link_to :positions, class: 'btn btn-default btn-lg' do
+  = link_to :empty_positions, class: 'btn btn-default btn-lg' do
     span class="left-icon glyphicon glyphicon-screenshot"
     | Empty positions
-  = link_to :positions, class: 'btn btn-default btn-lg' do
+  = link_to :my_positions, class: 'btn btn-default btn-lg' do
     span class="left-icon glyphicon glyphicon-user"
     | My positions
 br
@@ -47,4 +47,4 @@ div class="container"
                e free
 
 br
-
+=paginate @positions

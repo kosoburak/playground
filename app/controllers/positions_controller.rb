@@ -1,6 +1,6 @@
 class PositionsController < ApplicationController
-  load_and_authorize_resource :project, except: [:index, :show]
-  load_and_authorize_resource :position, :through => :project, except: [:index, :show, :add_user]
+  load_and_authorize_resource :project, except: [:index, :show, :my, :empty]
+  load_and_authorize_resource :position, :through => :project, except: [:index, :show, :add_user, :my, :empty]
   load_and_authorize_resource :position, only: [:index, :show, :ass_user]
   before_action :set_position, only: [:show, :edit, :update, :destroy]
   before_action :set_contracts, only: [:index, :edit, :new, :show]
@@ -10,8 +10,20 @@ class PositionsController < ApplicationController
   # GET /positions.json
   def index
     @positions = Position.includes(:skills)
+    @positions = @positions.order(:name).page(params[:page])
   end
 
+  def empty
+    @positions = Position.where(user: nil).includes(:skills)
+    @positions = @positions.order(:name).page(params[:page])
+    render :index
+  end
+
+  def my
+    @positions = Position.where(user: current_user).includes(:skills)
+    @positions = @positions.order(:name).page(params[:page])
+    render :index
+  end
   # GET /positions/1
   # GET /positions/1.json
   def show

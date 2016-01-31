@@ -30,7 +30,10 @@ Rails.application.routes.draw do
     get 'participating', on: :collection
   end
 
-  resources :positions, only: [:index]
+  resources :positions, only: [:index] do
+    get 'empty', on: :collection
+    get 'my', on: :collection
+  end
 
   resources :messages, except: [:index, :update, :edit] do
     get 'received', on: :collection

@@ -30,7 +30,7 @@ class Ability
       user.has_role?(:owner, e) || user.has_role?(:owner, e.project)
     end
 
-    can [:index, :my, :empty, :show, :read, :add_user], Position
+    can [:index, :my, :empty, :show, :read, :remove_user, :add_user], Position
     can [:crud], Position do |p|
       user.has_role?(:owner, p.project)
     end

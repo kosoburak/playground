@@ -28,9 +28,8 @@ div class="container"
           = image_tag(@position.user.avatar.url(:small))
         span
           = @position.user.name
-p
-  = current_user.has_role?(:owner, @project)
-
+= link_to 'Abandon Position', project_position_remove_user_path(@project, @position.id), method: :post
+'|
 = link_to 'Edit', edit_project_position_path(@project, @position)
 '|
 = link_to 'Delete', [@project, @position], method: :delete, data: { confirm: "Are you sure?" }

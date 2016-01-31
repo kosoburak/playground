@@ -1,10 +1,11 @@
 class PositionsController < ApplicationController
   load_and_authorize_resource :project, except: [:index, :show, :my, :empty]
-  load_and_authorize_resource :position, :through => :project, except: [:index, :show, :add_user, :my, :empty]
-  load_and_authorize_resource :position, only: [:index, :show, :ass_user]
+  load_and_authorize_resource :position, :through => :project, except: [:index, :show, :add_user, :remove_user, :my, :empty]
+  load_and_authorize_resource :position, only: [:index, :show, :add_user, :remove_user]
   before_action :set_position, only: [:show, :edit, :update, :destroy]
   before_action :set_contracts, only: [:index, :edit, :new, :show]
-  before_action :set_add_user_position, only: [:add_user]
+  before_action :set_add_user_position, only: [:add_user, :remove_user]
+  before_action :set_users_positions, only: [:remove_user]
 
   # GET /positions
   # GET /positions.json
@@ -52,9 +53,13 @@ class PositionsController < ApplicationController
 
   def remove_user
     @position.user = nil
-    @position.user
-    current_user.other_projects.delete(@position.project)
-    current_user.save
+    @position.save
+ #   p = current_user.other_projects
+ #   @positions = @positions.where('project_id = ?', @position.project)
+ #   if @positions.count < 2
+ #     p.delete(@position.project)
+ #     current_user.save
+ #   end
     render :show
   end
 
@@ -113,6 +118,10 @@ class PositionsController < ApplicationController
 
     def set_previous_url
       session[:prev_url] = request.referer
+    end
+
+    def set_users_positions
+      @positions = Position.where('user_id = ?',current_user.id)
     end
 
     def set_contracts

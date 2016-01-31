@@ -6,7 +6,11 @@ class CommentsController < ApplicationController
     @comment.author = current_user
     @comment.project = @project
     @comment.save
-    redirect_to project_path(@project)
+    if @comment.errors.any?
+      render "projects/show"
+    else
+      redirect_to project_path(@project)
+    end
   end
 
   def destroy

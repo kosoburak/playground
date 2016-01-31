@@ -3,7 +3,7 @@
     h1 Editing position
 
   .row
-    = simple_form_for(@position, url: project_positions_path(@project.id, @position.id), html: {methos: :put}) do |f|
+    = simple_form_for(@position, url: project_positions_path(@project, @position.id)) do |f|
       = f.error_notification
 
       .form-inputs

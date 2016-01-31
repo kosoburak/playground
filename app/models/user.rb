@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :skils
+  has_many :positions
   has_many :own_projects, class_name: 'Project', foreign_key: 'author_id'
-  has_and_belongs_to_many :other_projects, class_name: 'Project'
+  has_many :other_projects, class_name: 'Project', through: :positions, source: :project
   has_many :evaluations
   has_many :messages
 
@@ -20,7 +21,7 @@ class User < ActiveRecord::Base
   acts_as_taggable_on :skills
 
   def project_count
-    User.includes(:own_projects).references(:projects).where('projects.author_id = ?', id).count('projects.id') + User.includes(:other_projects).references(:projects_users).where('projects_users.user_id = ?', id).count('projects_users.project_id')
+    User.includes(:own_projects).references(:projects).where('projects.author_id = ?', id).count('projects.id') + User.includes(:other_projects).references(:positions).where('positions.user_id = ?', id).count('positions.project_id')
   end
 
   def sent_messages

@@ -45,6 +45,8 @@ class PositionsController < ApplicationController
   def add_user
     @position.user = current_user
     @position.save
+    current_user.other_projects << @position.project
+    current_user.save
     render :show
   end
 

@@ -28,7 +28,7 @@ class Ability
       user.has_role? :owner, pr
     end
 
-    can :create, Comment
+    can [:create, :karma], Comment
     can [:destroy, :update], Comment, author_id: user.id
 
     can [:create, :read], Evaluation
@@ -40,7 +40,6 @@ class Ability
     can [:crud], Position do |p|
       user.has_role?(:owner, p.project)
     end
-
 
     can :create, Message
     can [:received, :sent, :crud], Message do |m|

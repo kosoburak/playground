@@ -6,7 +6,9 @@ p#notice = notice
       = @project.name
     div aria-hidden="true"
       span class="left-icon glyphicon glyphicon-king"
-      | Author: #{@project.author.name}
+      | Author: 
+      = link_to user_path(@project.author) do 
+        = @project.author.name
     - unless @project.locality.blank?
       div aria-hidden="true"
         span class="left-icon glyphicon glyphicon-map-marker"
@@ -92,9 +94,9 @@ div class="row new-comment"
       = f.input :text
     .form-actions
       = f.button :submit, "Add comment"
-
-  = link_to 'Edit', edit_project_path(@project)
-  '|
-  = link_to "Delete", @project, method: :delete, data: { confirm: "Are you sure?" }
-  '|
+  - if can? :update, @project
+    = link_to 'Edit', edit_project_path(@project)
+    '|
+    = link_to "Delete", @project, method: :delete, data: { confirm: "Are you sure?" }
+    '|
   = link_to 'Back', projects_path

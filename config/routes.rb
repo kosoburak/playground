@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     post 'karma'
     resources :positions, except: [:index] do
       post 'add_user'
+      post 'remove_user'
     end
     resources :comments do
       post 'karma'

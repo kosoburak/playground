@@ -50,6 +50,14 @@ class PositionsController < ApplicationController
     render :show
   end
 
+  def remove_user
+    @position.user = nil
+    @position.user
+    current_user.other_projects.delete(@position.project)
+    current_user.save
+    render :show
+  end
+
   # POST /positions
   # POST /positions.json
   def create

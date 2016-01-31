@@ -64,33 +64,34 @@ p#notice = notice
 div class="row comments"
   h3 Comments
   - @project.comments.each do |comment|
-    div class="col-md-2"
-      div
-        = comment.author.name
-      div
-        = comment.created_at
-      - if can? :destroy, comment
-        = link_to [ comment.project, comment ], method: :delete, data: { confirm: 'Are you sure?' }, class: "block-icon" do
-          span class="glyphicon glyphicon-trash"
-    div class="col-md-8"
-      = comment.text
-    div class="col-md-2"
-      = button_to project_comment_karma_path(@project.id, comment.id), method: :post, class: "btn btn-default btn-xs pull-left" do
-        div aria-hidden="true"
-          - if comment.has_karma?(current_user)
-            span class="glyphicon glyphicon-minus left-icon"
-            | Karma
-          - else
-            span class="glyphicon glyphicon-plus left-icon"
-            | Karma
-      span class="pull-left right-icon"
-        = comment.karmas.count 
+    .row
+      div class="col-md-2"
+        div
+          = comment.author.name
+        div
+          = comment.created_at
+        - if can? :destroy, comment
+          = link_to [ comment.project, comment ], method: :delete, data: { confirm: 'Are you sure?' }, class: "block-icon" do
+            span class="glyphicon glyphicon-trash"
+      div class="col-md-8"
+        = comment.text
+      div class="col-md-2"
+        = button_to project_comment_karma_path(@project.id, comment.id), method: :post, class: "btn btn-default btn-xs pull-left" do
+          div aria-hidden="true"
+            - if comment.has_karma?(current_user)
+              span class="glyphicon glyphicon-minus left-icon"
+              | Karma
+            - else
+              span class="glyphicon glyphicon-plus left-icon"
+              | Karma
+        span class="pull-left right-icon"
+          = comment.karmas.count
         
 div class="row new-comment"
   = simple_form_for( [@project, @project.comments.build] ) do |f|
     - if @comment && @comment.errors.any?
-      = @comment.errors.full_messages.each do |msg|
-        li
+      - @comment.errors.full_messages.each do |msg|
+        li class="text-danger"
           = msg
     .form-inputs
       = f.input :text

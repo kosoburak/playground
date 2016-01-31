@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :index] do
     resources :evaluations, except: [:show, :index]
   end
-  resources :projects, except: [:update] do
+  resources :projects do
     post 'karma'
     resources :positions, except: [:index] do
       post 'add_user'

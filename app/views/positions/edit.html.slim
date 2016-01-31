@@ -1,6 +1,33 @@
-h1 Editing position
+.container
+  .row
+    h1 Editing position
 
-== render 'form'
+  .row
+    = simple_form_for(@position, url: project_positions_path(@project.id, @position.id), html: {methos: :put}) do |f|
+      = f.error_notification
 
-= link_to 'Back', url_for(:back)
+      .form-inputs
+        = f.input :name
+        = f.input :description
+        = f.input :contract_id, collection: @contracts, label_method: :name, value_method: :id, include_blank: false
+        = f.hidden_field :skill_list, value: @position.skill_list.join(','), id: 'skill_list'
+        div class="form-group"
+          = label @position.name, :skill_list, "Skills", class: "control-label"
+          div class="add-skill-input"
+            a href='#' id="add-skill-link" class="btn btn-default" aria-hidden="true"
+              span class="glyphicon glyphicon-plus"
+                | Add skill
+            = text_field_tag(:new_skill)
+          div class="skills"
+            - @position.skill_list.each do |skill|
+              div class="skill btn btn-primary btn-sm"
+                span
+                  = skill
+                a href='#' class="remove-skill-link" aria-hidden="true"
+                  span class="glyphicon glyphicon-remove"
 
+      .form-actions
+        = f.button :submit, label: "Edit Position"
+
+  .row
+    = link_to "Back", url_for(:back)

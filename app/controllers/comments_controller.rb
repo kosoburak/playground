@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource  :comment
   before_action :set_project, only: [:create, :destroy, :karma]
 
   def create

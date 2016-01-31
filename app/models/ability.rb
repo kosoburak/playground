@@ -14,7 +14,7 @@ class Ability
     can :read, :home
 
     alias_action :create, :read, :update, :destroy, :to => :crud
-    resources = [User, Comment, Karma]
+    resources = [User, Karma]
 
     resources.each do |resource|
       can [:read, :my, :participating], resource
@@ -28,7 +28,8 @@ class Ability
       user.has_role? :owner, pr
     end
 
-    can [:delete, :update], Comment, user_id: user.id
+    can :create, Comment
+    can [:destroy, :update], Comment, author_id: user.id
 
     can [:create, :read], Evaluation
     can :crud, Evaluation do |e|

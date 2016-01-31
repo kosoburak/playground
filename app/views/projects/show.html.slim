@@ -68,8 +68,9 @@ div class="row comments"
         = comment.author.name
       div
         = comment.created_at
-      = link_to [ comment.project, comment ], method: :delete, data: { confirm: 'Are you sure?' }, class: "block-icon" do
-        span class="glyphicon glyphicon-trash"
+      - if can? :destroy, comment
+        = link_to [ comment.project, comment ], method: :delete, data: { confirm: 'Are you sure?' }, class: "block-icon" do
+          span class="glyphicon glyphicon-trash"
     div class="col-md-8"
       = comment.text
     div class="col-md-2"

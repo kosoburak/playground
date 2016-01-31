@@ -89,8 +89,8 @@ div class="row comments"
 div class="row new-comment"
   = simple_form_for( [@project, @project.comments.build] ) do |f|
     - if @comment && @comment.errors.any?
-      = @comment.errors.full_messages.each do |msg|
-        li
+      - @comment.errors.full_messages.each do |msg|
+        li class="text-danger"
           = msg
     .form-inputs
       = f.input :text

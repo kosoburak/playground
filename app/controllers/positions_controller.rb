@@ -69,9 +69,10 @@ class PositionsController < ApplicationController
   # PATCH/PUT /positions/1
   # PATCH/PUT /positions/1.json
   def update
+    @project = Project.find(params[:project_id])
     respond_to do |format|
       if @position.update(position_params)
-        format.html { redirect_to @position, notice: 'Position was successfully updated.' }
+        format.html { redirect_to project_position_url(@project,@position), notice: 'Position was successfully updated.' }
         format.json { render :show, status: :ok, location: @position }
       else
         format.html { render :edit }

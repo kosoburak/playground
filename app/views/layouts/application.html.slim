@@ -6,16 +6,14 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  body
-    - if user_signed_in?
+  - if user_signed_in?
+    body
       nav class="navbar navbar-default navbar-fixed-top"
         div class="container"
           div class="navbar-header"
             a class="navbar-brand" Playground
           div id="navbar" class="navbar-collapse collapse"
             ul class="nav navbar-nav"
-              li
-                = link_to "Home", :root
               li
                 = link_to "Projects", :projects
               li
@@ -29,10 +27,19 @@ html
                 = link_to(image_tag(current_user.avatar.url(:tiny)), edit_user_registration_path, class: 'user_avatar')
               li
                 = link_to('Logout', destroy_user_session_path, :method => :delete)
-    div class="container"
-      p class="notice"
-        = notice
-      p class="alert"
-        = alert
-    div class="container"
-      = yield
+      div class="container"
+        p class="notice"
+          = notice
+        p class="alert"
+          = alert
+        div class="container"
+          = yield
+  - if !user_signed_in?
+    body class="not_signed"
+      div class="container"
+        p class="notice"
+          = notice
+        p class="alert"
+          = alert
+      div class="container"
+        = yield

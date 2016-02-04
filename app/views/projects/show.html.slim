@@ -95,9 +95,9 @@ div class="row new-comment"
       = f.input :text
     .form-actions
       = f.button :submit, "Add comment"
-  - if can? :update, @project
-    = link_to 'Edit', edit_project_path(@project)
-    '|
-    = link_to "Delete", @project, method: :delete, data: { confirm: "Are you sure?" }
-    '|
-  = link_to 'Back', projects_path
+  div class="btn-toolbar"
+    = link_to 'Back', projects_path, class: 'btn btn-default button-margins'
+    - if can? :update, @project
+      = link_to 'Edit', edit_project_path(@project), class: 'btn btn-default button-margins'
+      = link_to "Delete", @project, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default button-margins'
+

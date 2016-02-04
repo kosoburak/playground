@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
 
   acts_as_taggable_on :skills
 
+  scope :confirmed, -> { where('confirmed_at IS NOT NULL') }
+
   def project_count
     User.includes(:own_projects).references(:projects).where('projects.author_id = ?', id).count('projects.id') + User.includes(:other_projects).references(:positions).where('positions.user_id = ?', id).count('positions.project_id')
   end

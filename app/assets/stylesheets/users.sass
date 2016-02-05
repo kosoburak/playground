@@ -4,24 +4,35 @@
 
 .user .projects li
   width: 100%
-  float: none
-  padding-top: 0
+  height: 35px
 
 .user .projects .project a
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  padding-top: 0
   text-decoration: none
 
-.user .project a
-  display: block
+.user .projects .project a div
+  min-width: 0
 
-.user .project span
-  display: inline-block
+.user .project .texts
+  flex-basis: 85%
 
-.user .project .name
+.user .project .texts .name
   font-weight: bold
+  line-height: 24px
 
-.user .project .description
+.user .project .texts .description
   padding-left: 10px
-  overflow: visible
+  text-overflow: ellipsis
+  overflow: hidden
+  white-space: nowrap
+  width: 320px
+
+.user .project .icons
+  padding-left: 20px
+  flex-basis: 15%
 
 .user .project .participants
   padding-right: 10px

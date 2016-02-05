@@ -20,11 +20,12 @@
           - @projects.each do |project|
             li class="project"
               = link_to project_path(project) do
-                span class="name"
-                  = project.name
-                span class="description"
-                  = project.description
-                span class="pull-right"
+                div class="texts"
+                  div class="name pull-left"
+                    = project.name
+                  div class="description pull-left"
+                    = project.description
+                div class="icons"
                   span aria-hidden="true" class="participants"
                     = Project.number_of_participants(project.id)
                     span class="glyphicon glyphicon-user right-icon"

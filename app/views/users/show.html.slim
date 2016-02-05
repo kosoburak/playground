@@ -26,7 +26,7 @@
                   = project.description
                 span class="pull-right"
                   span aria-hidden="true" class="participants"
-                    = project.participants.count
+                    = Project.number_of_participants(project.id)
                     span class="glyphicon glyphicon-user right-icon"
                   span aria-hidden="true" class="karma"
                     = project.karmas.count

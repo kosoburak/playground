@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   scope :confirmed, -> { where('confirmed_at IS NOT NULL') }
 
   def project_count
-    Project.where('author_id = ?', id).count + Position.includes(:project).references(:project).where('user_id = ? and projects.author_id != ?', id, id).count
+    Project.where('author_id = ?', id).count + Position.select(:project_id).distinct.includes(:project).references(:project).where('user_id = ? and projects.author_id != ?', id, id).count
   end
 
   def sent_messages

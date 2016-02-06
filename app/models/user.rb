@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :skils
+  has_many :skills
   has_many :positions
   has_many :own_projects, class_name: 'Project', foreign_key: 'author_id'
   has_many :other_projects, class_name: 'Project', through: :positions, source: :project

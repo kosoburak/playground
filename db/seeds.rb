@@ -32,3 +32,18 @@ p1 = Position.create(project: project1, contract: full_contract, name: 'Camera m
 p2 = Position.create(project: project1, contract: full_contract, name: 'Hot actress', description: 'You should have some experience with filming.')
 p3 = Position.create(project: project1, contract: full_contract, name: 'Hot actor', description: 'You should have some experience with filming.')
 
+message1 = Message.create(from: user1, to: user3, user: user1, text: 'Hi, you are awesome! Wanna play in my movie?', send_time: Time.local(2016,"jan",1,20,15,1), to_name: user3.name, subject: 'Hello')
+message1_received = Message.create(from: user1, to: user3, user: user3, text: 'Hi, you are awesome! Wanna play in my movie?', send_time: Time.local(2016,"jan",1,20,15,1), to_name: user3.name, subject: 'Hello')
+user1.add_role :owner, message1
+user3.add_role :owner, message1_received
+
+
+message2 = Message.create(from: user3, to: user1, user: user3, text: 'Thanks, your project looks great! I am in', send_time: Time.local(2016,"jan",1,21,15,1), to_name: user1.name, subject: 'Hello')
+message2_received = Message.create(from: user3, to: user1, user: user1, text: 'Thanks, your project looks great! I am in', send_time: Time.local(2016,"jan",1,21,15,1), to_name: user1.name, subject: 'Hello')
+user3.add_role :owner, message2
+user1.add_role :owner, message2_received
+
+message3 = Message.create(from: user1, to: user3, user: user1, text: 'That is great. And we can eat pizza all the time.', send_time: Time.local(2016,"jan",1,22,15,1), to_name: user3.name, subject: 'Hello')
+message3_received = Message.create(from: user1, to: user3, user: user3, text: 'That is great. And we can eat pizza all the time.', send_time: Time.local(2016,"jan",1,22,15,1), to_name: user3.name, subject: 'Hello')
+user1.add_role :owner, message3
+user3.add_role :owner, message3_received

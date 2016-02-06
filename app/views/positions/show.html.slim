@@ -33,5 +33,6 @@ p#notice = notice
             = image_tag(@position.user.avatar.url(:tiny))
           span
             = @position.user.name
+    - if @position.user == current_user
       div class="btn-toolbar"
         = link_to 'Abandon Position', project_position_remove_user_path(@project, @position.id), method: :post, class: 'btn btn-default pull-left button-margins'

@@ -8,7 +8,7 @@ h2
     = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
     = f.input :password_confirmation, required: true
     = f.input :locality
-    = f.input :avatar, as: :file
+    = f.input :avatar, as: :file, input_html: {class: 'filestyle', 'data-buttonBefore': 'true'}
   .form-actions
     = f.button :submit, "Sign up"
 = render "devise/shared/links"

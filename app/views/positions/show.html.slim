@@ -1,37 +1,37 @@
 p#notice = notice
 
-div class="container"
-  h2
-    | Position name: 
-    = @position.name
-  h3 Description:
-  p
-    = @position.description
-  h2 Required skills
-  - if @position.skill_list.empty?
-    p Position does not have required skills.
-  - else
-    div class="skills"
-      - @position.skill_list.each do |skill|
-        div class="skill btn btn-primary btn-sm"
-          = skill
-  h2 Contract type:
-  p
-    = @position.contract.name
-  h2 Position assignee:
-  - if !@position.user
-    = link_to 'Not assigned yet. Apply?', project_position_add_user_path(@project, @position.id), method: :post
-  - else
-    = link_to user_path(@position.user) do
-      span aria-hidden="true"
-        span
-          = image_tag(@position.user.avatar.url(:small))
-        span
-          = @position.user.name
-= link_to 'Abandon Position', project_position_remove_user_path(@project, @position.id), method: :post
-'|
-= link_to 'Edit', edit_project_position_path(@project, @position)
-'|
-= link_to 'Delete', [@project, @position], method: :delete, data: { confirm: "Are you sure?" }
-'|
-= link_to 'Back', url_for(:back)
+.row
+  div class="col-md-4"
+    h2
+      = @position.name
+    div class="btn-toolbar"
+      = link_to 'Edit', edit_project_position_path(@project, @position), class: 'btn btn-default pull-left'
+      = link_to 'Delete', [@project, @position], method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default pull-left'
+      = link_to 'Back', url_for(:back), class: 'btn btn-default pull-left'
+  div class="col-md-8"
+    h3 Description:
+    p
+      = @position.description
+    h3 Required skills
+    - if @position.skill_list.empty?
+      p Position does not have required skills.
+    - else
+      div class="skills"
+        - @position.skill_list.each do |skill|
+          div class="skill btn btn-primary btn-sm"
+            = skill
+    h3 Contract type:
+    p
+      = @position.contract.name
+    h3 Position assignee:
+    - if !@position.user
+      = link_to 'Not assigned yet. Apply?', project_position_add_user_path(@project, @position.id), method: :post, class: 'btn btn-default'
+    - else
+      = link_to user_path(@position.user) do
+        span aria-hidden="true"
+          span
+            = image_tag(@position.user.avatar.url(:tiny))
+          span
+            = @position.user.name
+      div class="btn-toolbar"
+        = link_to 'Abandon Position', project_position_remove_user_path(@project, @position.id), method: :post, class: 'btn btn-default pull-left button-margins'

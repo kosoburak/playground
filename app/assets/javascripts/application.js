@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require bootstrap-filestyle
 //= require_tree .
 
 $(document).on('click', '.clickable-row', onRowClick);

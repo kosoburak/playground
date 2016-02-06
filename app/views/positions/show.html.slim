@@ -5,8 +5,9 @@ p#notice = notice
     h2
       = @position.name
     div class="btn-toolbar"
-      = link_to 'Edit', edit_project_position_path(@project, @position), class: 'btn btn-default pull-left'
-      = link_to 'Delete', [@project, @position], method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default pull-left'
+      -  if can? :update, @position
+        = link_to 'Edit', edit_project_position_path(@project, @position), class: 'btn btn-default pull-left'
+        = link_to 'Delete', [@project, @position], method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default pull-left'
       = link_to 'Back', url_for(:back), class: 'btn btn-default pull-left'
   div class="col-md-8"
     h3 Description:

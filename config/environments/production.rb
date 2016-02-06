@@ -14,6 +14,18 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  config.action_mailer.smtp_settings = {
+    :port       => 587,
+    :address    => "sandbox42ed1fa9c32246daa4010f84aac28032.mailgun.org",
+    :user_name  => ENV["MAILGUN_USERNAME"],
+    :password   => ENV["MAILGUN_PASSWORD"]
+  }
+
+  config.action_mailer.default_url_options = { :host => 'protected-wave-37796.herokuapp.com'}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
   # For large-scale production use, consider using a caching reverse proxy like

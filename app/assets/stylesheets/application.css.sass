@@ -13,6 +13,8 @@
  *= require_tree .
  *= require_self
  */
+//= depend_on_asset "image1.jpg"
+//= depend_on_asset "image3.jpg"
 
 @import "bootstrap-sprockets"
 @import "bootswatch/paper/variables"
@@ -44,7 +46,7 @@ span.right-icon
   margin-bottom: 5px
 
 body.not_signed
-  background: url('image3.jpg')
+  background: url('<%= asset_path("image3.jpg") %>')
   background-repeat: no-repeat
   background-size: cover
 
@@ -59,7 +61,7 @@ body.not_signed
   font-size: 40px
   font-weight: bold
   text-align: center
-  background: url('image1.jpg')
+  background: url('<%= asset_path("image1.jpg") %>')
   background-repeat: no-repeat
   background-size: cover
 

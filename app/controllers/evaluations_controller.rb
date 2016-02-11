@@ -53,8 +53,8 @@ class EvaluationsController < ApplicationController
     user_id = params[:user_id]
 
     @projects = Project.includes(:participants)
-    .references(:projects_users)
-    .where('projects_users.user_id = ? or projects.author_id = ?', user_id, user_id)
+    .references(:positions)
+    .where('positions.user_id = ? or projects.author_id = ?', user_id, user_id)
     .order('projects.name')
 
     if @projects.empty?
